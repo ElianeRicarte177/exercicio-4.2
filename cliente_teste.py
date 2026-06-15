@@ -1,12 +1,17 @@
 import asyncio
 import json
+import subprocess
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 
 async def main() -> dict:
-    params = StdioServerParameters(command="python", args=["servidor_mcp.py"])
+    params = StdioServerParameters(
+        command="python",
+        args=["servidor_mcp.py"],
+        errlog=subprocess.DEVNULL,
+    )
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
