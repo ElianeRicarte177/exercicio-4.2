@@ -28,3 +28,5 @@ O MCP escondeu de quem chama a tool todo o detalhe HTTP da API: o agente so
 precisa saber que existe criar_tarefa(titulo), sem conhecer a URL, o metodo
 POST, o formato do JSON ou os status codes. O protocolo tornou a implementacao
 da API um detalhe irrelevante para o consumidor.
+
+_Entrega via PR — exercicio 4.2._
