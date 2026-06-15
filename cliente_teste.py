@@ -1,17 +1,21 @@
+import os
+import sys
+
+# Silencia QUALQUER coisa que o SDK escreva no stderr, redirecionando o
+# stderr do processo para /dev/null antes de importar o mcp.
+sys.stderr.flush()
+_devnull = os.open(os.devnull, os.O_WRONLY)
+os.dup2(_devnull, 2)
+
 import asyncio
 import json
-import subprocess
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 
 async def main() -> dict:
-    params = StdioServerParameters(
-        command="python",
-        args=["servidor_mcp.py"],
-        errlog=subprocess.DEVNULL,
-    )
+    params = StdioServerParameters(command="python", args=["servidor_mcp.py"])
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
